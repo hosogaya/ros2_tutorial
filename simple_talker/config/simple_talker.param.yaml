@@ -1,0 +1,4 @@
+/**:
+  ros__parameters:
+    string: "Hello ROS2 world"
+    count: 3
