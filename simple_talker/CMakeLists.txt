@@ -22,14 +22,34 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# simple talker
 add_executable(talker
   src/simple_talker.cpp
 )
 
-ament_target_dependencies(talker rclcpp std_msgs my_messages)
+ament_target_dependencies(talker rclcpp std_msgs)
 
 install(TARGETS
   talker
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# simple talker with original message
+add_executable(talker_with_original_message
+  src/simple_talker_with_original_message.cpp
+)
+ament_target_dependencies(talker_with_original_message rclcpp std_msgs my_messages)
+install(TARGETS
+  talker_with_original_message
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+add_executable(talker_with_parameters
+  src/simple_talker_with_parameters.cpp
+)
+ament_target_dependencies(talker_with_parameters rclcpp std_msgs my_messages)
+install(TARGETS
+  talker_with_parameters
   DESTINATION lib/${PROJECT_NAME}
 )
 
