@@ -55,9 +55,6 @@ install(TARGETS
 # Copy config and launch directory to install directory
 install(DIRECTORY
   config
-  DESTINATION share/${PROJECT_NAME}
-)
-install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}
 )

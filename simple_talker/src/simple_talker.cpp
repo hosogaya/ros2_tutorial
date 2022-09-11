@@ -12,7 +12,9 @@ class SimpleTalker : public rclcpp::Node {
 public:
     SimpleTalker() : rclcpp::Node("simple_talker"), count_(0) {
        // Create topic and publisher
-        publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+        publisher_ = this->create_publisher<std_msgs::msg::String>(
+            "topic", // topic name
+             10); // Quality of Service. The larger value is, the higher communication quality is among nodes, topics and services in exchange for communication speed.
         // call function 'timer_callback' every 500ms.
         timer_ = this->create_wall_timer(
            500ms, std::bind(&SimpleTalker::timer_callback, this)
