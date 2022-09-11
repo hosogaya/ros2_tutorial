@@ -18,10 +18,12 @@ class StatePublisher : public rclcpp::Node
 public:
     StatePublisher() : Node("state_publisher") 
     {
+        // Create tf publisher 
         tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
+        // Create joint state publisher
         publisher_ = this->create_publisher<sensor_msgs::msg::JointState>(
             "joint_states", 10);
-
+        // Register callback function
         timer_ = this->create_wall_timer(
             100ms, std::bind(&StatePublisher::on_timer, this)
         );
@@ -30,9 +32,9 @@ public:
 private:
     void on_timer() {
         rclcpp::Time now = this->get_clock()->now();
-        geometry_msgs::msg::TransformStamped t;
-        sensor_msgs::msg::JointState joint_state;
 
+        // Create joint state reference 
+        sensor_msgs::msg::JointState joint_state;
         joint_state.header.stamp = now;
         joint_state.name.resize(3);
         joint_state.name[0] = "swivel";
@@ -43,8 +45,10 @@ private:
         joint_state.position[1] = tilt_;
         joint_state.position[2] = height_;
 
-        t.header.frame_id = "odom";
-        t.child_frame_id = "axis";
+        // Create tf (robot position on the world)
+        geometry_msgs::msg::TransformStamped t;
+        t.header.frame_id = "odom"; 
+        t.child_frame_id = "axis"; 
         t.header.stamp = now;
 
         t.transform.translation.x = cos(angle_)*2.0;
@@ -58,9 +62,11 @@ private:
         t.transform.rotation.z = q.z();
         t.transform.rotation.w = q.w();
 
+        // publish joint state and tf
         publisher_->publish(joint_state);
         tf_broadcaster_->sendTransform(t);
 
+        // update joint state reference
         tilt_ += tinc_;
         if (tilt_ < -0.5f || tilt_ > 0.0f) {
             tinc_ *= -1.0f;
