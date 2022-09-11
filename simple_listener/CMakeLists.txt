@@ -23,17 +23,27 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# Build simple_listener.cpp as listener
 add_executable(listener
   src/simple_listener.cpp
 )
-
 ament_target_dependencies(listener rclcpp std_msgs  my_messages)
-
 install(TARGETS
   listener
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# Build simple_listener_with_custom_message.cpp as listener_with_custom_msg.
+add_executable(listener_with_custom_msg
+  src/simple_listener_with_custom_message.cpp
+)
+ament_target_dependencies(listener_with_custom_msg rclcpp std_msgs  my_messages)
+install(TARGETS
+  listener_with_custom_msg
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# Copy launch direcotry to install directory,
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}

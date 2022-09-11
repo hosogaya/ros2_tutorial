@@ -3,6 +3,8 @@ import launch_ros
 from launch_ros.actions import Node
 from launch.conditions import IfCondition, UnlessCondition
 
+
+# Use if condition in launch file. 
 def generate_launch_description():
     use_costom_msg = launch.actions.DeclareLaunchArgument(
         "use_costom_msg", 
@@ -14,6 +16,7 @@ def generate_launch_description():
         package="simple_talker",
         namespace='',
         executable='talker_with_custom_message',
+        name="talker_with_custom_msg",
         output='screen',
         condition=IfCondition(launch.substitutions.LaunchConfiguration("use_costom_msg")),
     )
@@ -22,6 +25,7 @@ def generate_launch_description():
         package='simple_talker',
         namespace='',
         executable='talker',
+        name='talker',
         output='screen',
         condition= UnlessCondition(launch.substitutions.LaunchConfiguration("use_costom_msg")),
     )

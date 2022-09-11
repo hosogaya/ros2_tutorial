@@ -26,9 +26,7 @@ endif()
 add_executable(talker
   src/simple_talker.cpp
 )
-
 ament_target_dependencies(talker rclcpp std_msgs)
-
 install(TARGETS
   talker
   DESTINATION lib/${PROJECT_NAME}
@@ -44,6 +42,7 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# simple_talker_with_parameters
 add_executable(talker_with_parameters
   src/simple_talker_with_parameters.cpp
 )
@@ -53,6 +52,7 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+# Copy config and launch directory to install directory
 install(DIRECTORY
   config
   DESTINATION share/${PROJECT_NAME}

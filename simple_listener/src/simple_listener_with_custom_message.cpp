@@ -10,24 +10,25 @@ using std::placeholders::_1;
 
 class SimpleListener :  public rclcpp::Node {
 public:
-    SimpleListener(std::string name) : rclcpp::Node(name) {
-        subscriber_ = this->create_subscription<std_msgs::msg::String>(
+    SimpleListener() : rclcpp::Node("simple_listener_with_custom_msg") {
+        // Create subscriber which subscribe
+        subscriber_ = this->create_subscription<my_messages::msg::MyString>(
             "topic", 10, std::bind(&SimpleListener::topic_callback, this, _1)
         );
     }
 
 private:
-    void topic_callback(const std_msgs::msg::String::SharedPtr msg) {
-        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+    void topic_callback(const my_messages::msg::MyString::SharedPtr msg) {
+        RCLCPP_INFO(this->get_logger(), "I heard: '%s' as `%d`th message", msg->string.data.c_str(), msg->count);
     }
 
-    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscriber_;
+    rclcpp::Subscription<my_messages::msg::MyString>::SharedPtr subscriber_;
 };
 
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<SimpleListener>("simple_listener"));
+  rclcpp::spin(std::make_shared<SimpleListener>());
   rclcpp::shutdown();
   return 0;
 }
