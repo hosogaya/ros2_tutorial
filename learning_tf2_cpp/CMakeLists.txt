@@ -15,6 +15,7 @@ find_package(turtlesim REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+# static_turtle_tf2_broadcaster.cpp
 add_executable(static_turtle_tf2_broadcaster src/static_turtle_tf2_broadcaster.cpp)
 ament_target_dependencies(
    static_turtle_tf2_broadcaster
@@ -24,7 +25,12 @@ ament_target_dependencies(
    tf2_ros
    turtlesim
 )
+install(TARGETS
+  static_turtle_tf2_broadcaster
+  DESTINATION lib/${PROJECT_NAME}
+)
 
+# turtle_tf2_broadcaster
 add_executable(turtle_tf2_broadcaster src/turtle_tf2_broadcaster.cpp)
 ament_target_dependencies(
     turtle_tf2_broadcaster
@@ -34,7 +40,12 @@ ament_target_dependencies(
     tf2_ros
     turtlesim
 )
+install(TARGETS
+  turtle_tf2_broadcaster
+  DESTINATION lib/${PROJECT_NAME}
+)
 
+# turtle_tf2_listener
 add_executable(turtle_tf2_listener src/turtle_tf2_listener.cpp)
 ament_target_dependencies(
     turtle_tf2_listener
@@ -44,7 +55,9 @@ ament_target_dependencies(
     tf2_ros
     turtlesim
 )
-
+install(TARGETS
+    turtle_tf2_listener
+    DESTINATION lib/${PROJECT_NAME})
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -56,23 +69,10 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(TARGETS
-  static_turtle_tf2_broadcaster
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(TARGETS
-  turtle_tf2_broadcaster
-  DESTINATION lib/${PROJECT_NAME}
-)
-install(TARGETS
-    turtle_tf2_listener
-    DESTINATION lib/${PROJECT_NAME})
-
+# Copy launch directory to install directory
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}
 )
-
 
 ament_package()

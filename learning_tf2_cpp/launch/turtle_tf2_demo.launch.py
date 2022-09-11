@@ -6,11 +6,13 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
+        # launch turtlesim
         Node(
             package='turtlesim', 
             executable='turtlesim_node',
             name='sim'
         ),
+        # launch publisher of turtle's transform
         Node(
             package='learning_tf2_cpp',
             executable='turtle_tf2_broadcaster',
@@ -18,10 +20,6 @@ def generate_launch_description():
             parameters=[
                 {'turtlename': 'turtle1'}
             ]
-        ),
-        DeclareLaunchArgument(
-            'target_frame', default_value='turtle1',
-            description='Target frame name.'
         ),
         Node(
             package='learning_tf2_cpp',
@@ -31,6 +29,12 @@ def generate_launch_description():
                 {'turtlename' : 'turtle2'}
             ]
         ),
+        # declare argument
+        DeclareLaunchArgument(
+            'target_frame', default_value='turtle1',
+            description='Target frame name.'
+        ),
+        # launch tf listener and twist publisher for turtle2
         Node(
             package='learning_tf2_cpp',
             executable='turtle_tf2_listener',

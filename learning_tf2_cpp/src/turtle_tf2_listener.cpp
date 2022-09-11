@@ -22,15 +22,20 @@ public:
       turtle_spawning_service_ready_(false),
       turtle_spawned_(false)
     {
+        // This node publish geometry_msgs::msg::Twist message for turtle2 to chace <target_frame>.
         this->declare_parameter<std::string>("target_frame", "turtle1");
         this->get_parameter("target_frame", target_frame_);
         
+        // Create buffer of tf and tf listener.
         tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
         transform_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
+        // Create spawner for turtle2
         spawner_ = this->create_client<turtlesim::srv::Spawn>("spawn");
+        // Create publisher for Twist msg.
         publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("turtle2/cmd_vel", 1);
 
+        // Register callback function.
         timer_ = create_wall_timer(
             1s, std::bind(&FrameListener::on_timer, this)
         );
@@ -43,7 +48,9 @@ private:
         std::string toFrameRel = "turtle2";
 
         if (turtle_spawning_service_ready_) {
+            // services of turtlesim are launched. 
             if (turtle_spawned_) {
+                // turtle2 already spawned.
                 geometry_msgs::msg::TransformStamped transformStamped;
 
                 try {
@@ -57,7 +64,7 @@ private:
                     toFrameRel.c_str(), fromFrameRel.c_str(), ex.what());
                     return;
                 }
-
+                // Create Twist msg.
                 geometry_msgs::msg::Twist msg;
 
                 static const double scaleRotationRate = 1.0;
@@ -71,7 +78,7 @@ private:
                     pow(transformStamped.transform.translation.x, 2) + 
                     pow(transformStamped.transform.translation.y, 2)
                 );
-
+                // Publish Twist msg.
                 publisher_->publish(msg);
             }
             else {
@@ -81,26 +88,34 @@ private:
         }
         else {
             if (spawner_->service_is_ready()) {
+                // services of turtlesim are launched. 
+
+                // Create a message for using service.
                 auto request = std::make_shared<turtlesim::srv::Spawn::Request>();
                 request->x = 4.0;
                 request->y = 2.0;
                 request->theta = 0.0;
                 request->name = "turtle2";
 
+                // Create callback function
                 using ServiceResponseFuture = rclcpp::Client<turtlesim::srv::Spawn>::SharedFuture;
                 auto response_received_callback = [this](ServiceResponseFuture future) {
                     auto result = future.get();
                     if (strcmp(result->name.c_str(), "turtle2") == 0.0) {
+                        // turtle2 is spawned.
                         turtle_spawning_service_ready_ = true;
                     }
                     else {
                         RCLCPP_ERROR(this->get_logger(), "Service callback result mismatch");
                     }
                 };
+                // Call service. 
+                // first argument is a message sending to the service
+                // second argument is callback function which called when the service returns message.
                 auto result = spawner_->async_send_request(request, response_received_callback);
             }
             else {
-                RCLCPP_INFO(this->get_logger(), "Service is no ready");
+                RCLCPP_INFO(this->get_logger(), "Service is not ready");
             }
         }
     }
