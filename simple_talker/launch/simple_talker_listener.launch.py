@@ -9,7 +9,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 import yaml
 
-
+# launch listener node and talker node
 def launch_setup(context, *args, **kwargs):
     def load_composable_node_param(param_path):
         with open(LaunchConfiguration(param_path).perform(context), "r") as f:

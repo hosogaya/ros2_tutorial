@@ -1,6 +1,7 @@
 import launch
 from launch_ros.actions import Node
 
+# launch talker node
 def generate_launch_description():
     simple_talker_component = Node(
         package="simple_talker",

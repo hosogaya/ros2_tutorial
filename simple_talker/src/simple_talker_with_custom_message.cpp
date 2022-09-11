@@ -13,7 +13,6 @@ public:
     SimpleTalker(std::string name) : rclcpp::Node(name) {
         count_ = 0;
         publisher_ = this->create_publisher<my_messages::msg::MyString>("topic", 10);
-        // publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
         timer_ = this->create_wall_timer(
            500ms, std::bind(&SimpleTalker::timer_callback, this)
         );

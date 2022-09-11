@@ -34,13 +34,13 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# simple talker with original message
-add_executable(talker_with_original_message
-  src/simple_talker_with_original_message.cpp
+# simple talker with custom message
+add_executable(talker_with_custom_message
+  src/simple_talker_with_custom_message.cpp
 )
-ament_target_dependencies(talker_with_original_message rclcpp std_msgs my_messages)
+ament_target_dependencies(talker_with_custom_message rclcpp std_msgs my_messages)
 install(TARGETS
-  talker_with_original_message
+  talker_with_custom_message
   DESTINATION lib/${PROJECT_NAME}
 )
 

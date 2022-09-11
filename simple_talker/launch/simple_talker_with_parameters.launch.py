@@ -32,8 +32,7 @@ def launch_setup(context, *args, **kwargs):
     
     return [simple_talker_component]
 
-
-
+# launch talker_with_parameters. The prameters set as simple_talker.param.yaml
 def generate_launch_description():
     def add_launch_arg(name: str, default_value=None):
         return DeclareLaunchArgument(name, default_value=default_value)
