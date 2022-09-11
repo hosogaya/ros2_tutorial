@@ -1,6 +1,4 @@
 import os
-from secrets import choice
-from urllib import robotparser
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
@@ -19,7 +17,7 @@ def generate_launch_description():
     )
     
     model_arg = DeclareLaunchArgument(
-        name='model', default_value=os.path.join(urdf_tutorial_path, "urdf/myfirst.urdf"),
+        name='model', default_value=os.path.join(urdf_tutorial_path, "urdf/cylinder.urdf"),
         description='Absolute path to robot urdf file'
     )
 

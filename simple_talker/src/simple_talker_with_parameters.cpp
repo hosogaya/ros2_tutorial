@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 
 class SimpleTalker : public rclcpp::Node {
 public:
-    SimpleTalker() : rclcpp::Node("simple_talker") {
+    SimpleTalker() : rclcpp::Node("simple_talker_with_parameters") {
         // declare parameters (<paramter_name>, <default_value>)
         declare_parameter("string", "Hello world");
         count_ = declare_parameter("count", 0);

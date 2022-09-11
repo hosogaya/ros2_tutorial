@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 
 class SimpleTalker : public rclcpp::Node {
 public:
-    SimpleTalker() : rclcpp::Node("simple_talker") {
+    SimpleTalker() : rclcpp::Node("simple_talker_with_custom_message") {
         count_ = 0;
         // Create topic and publisher
         publisher_ = this->create_publisher<my_messages::msg::MyString>("topic", 10);

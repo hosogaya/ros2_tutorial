@@ -22,7 +22,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-# simple talker
+# Build simple talker
 add_executable(talker
   src/simple_talker.cpp
 )
@@ -32,17 +32,17 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# simple talker with custom message
-add_executable(talker_with_custom_message
+# Build simple talker with custom message
+add_executable(talker_with_custom_msg
   src/simple_talker_with_custom_message.cpp
 )
-ament_target_dependencies(talker_with_custom_message rclcpp std_msgs my_messages)
+ament_target_dependencies(talker_with_custom_msg rclcpp std_msgs my_messages)
 install(TARGETS
-  talker_with_custom_message
+  talker_with_custom_msg
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# simple_talker_with_parameters
+# Build simple_talker_with_parameters
 add_executable(talker_with_parameters
   src/simple_talker_with_parameters.cpp
 )
@@ -54,8 +54,8 @@ install(TARGETS
 
 # Copy config and launch directory to install directory
 install(DIRECTORY
+  launch  
   config
-  launch
   DESTINATION share/${PROJECT_NAME}
 )
 

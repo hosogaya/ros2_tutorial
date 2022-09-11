@@ -27,7 +27,7 @@ endif()
 add_executable(listener
   src/simple_listener.cpp
 )
-ament_target_dependencies(listener rclcpp std_msgs  my_messages)
+ament_target_dependencies(listener rclcpp std_msgs)
 install(TARGETS
   listener
   DESTINATION lib/${PROJECT_NAME}
@@ -37,7 +37,7 @@ install(TARGETS
 add_executable(listener_with_custom_msg
   src/simple_listener_with_custom_message.cpp
 )
-ament_target_dependencies(listener_with_custom_msg rclcpp std_msgs  my_messages)
+ament_target_dependencies(listener_with_custom_msg rclcpp std_msgs my_messages)
 install(TARGETS
   listener_with_custom_msg
   DESTINATION lib/${PROJECT_NAME}
