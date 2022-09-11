@@ -10,7 +10,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default='false')
     
     # load urdf file
-    urdf_file_name = 'r2d2.urdf.xml'
+    urdf_file_name = 'r2d2.urdf'
     urdf = os.path.join(
         get_package_share_directory('urdf_tutorial'),
         'urdf', urdf_file_name

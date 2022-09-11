@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="joint_origins">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="first_arm">
+    <visual>
+      <geometry>
+        <box size="0.6 0.1 0.2"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 -0.3"/>
+    </visual>
+  </link>
+
+  <link name="second_arm">
+    <visual>
+      <geometry>
+        <box size="0.6 0.1 0.2"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 -0.3"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_first_arm" type="fixed">
+    <parent link="base_link"/>
+    <child link="first_arm"/>
+    <origin xyz="0 -0.22 0.25"/>
+  </joint>
+
+  <joint name="first_arm_to_second_arm" type="revolute">
+    <parent link="first_arm"/>
+    <child link="second_arm"/>
+    <axis xyz="0 1 0" />
+    <limit upper="1.57" lower="-1.57" effort="20" velocity="10" />
+    <origin xyz="0 -0.1 0" rpy="0 0 0" />
+  </joint>
+
+</robot>
